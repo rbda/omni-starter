@@ -12,10 +12,11 @@ Make sure you have Python 3.7 [installed locally](http://install.python-guide.or
 $ git clone https://github.com/rbda/django-heroku-starter.git
 $ cd django-heroku-starter
 
-$ python3 -m venv baseproject
+$ python3 -m venv baseproject-venv
+$ source baseproject-venv/bin/activate
 $ pip install -r requirements.txt
 
-$ createdb django_heroku_starter
+$ createdb django_heroku_starter  #this may have issues
 
 $ python manage.py migrate
 $ python manage.py collectstatic
