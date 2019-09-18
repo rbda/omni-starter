@@ -30,6 +30,9 @@ INSTALLED_APPS = [
     'django.contrib.admindocs',
 
     'debug_toolbar',
+
+    'users.apps.UsersConfig',
+
 ]
 
 MIDDLEWARE = [
@@ -113,3 +116,5 @@ django_heroku.settings(locals())
 # debug_toolbar settings
 if DEBUG:
     INTERNAL_IPS = ('127.0.0.1',)
+
+AUTH_USER_MODEL = 'users.CustomUser'
