@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+
     'django.contrib.admindocs',
 
     'debug_toolbar',
@@ -44,7 +45,8 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    "django.contrib.admindocs.middleware.XViewMiddleware",
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
 ROOT_URLCONF = "baseproject.urls"

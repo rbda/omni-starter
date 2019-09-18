@@ -17,6 +17,7 @@ admin.autodiscover()
 urlpatterns = [
     # path("", hello.views.index, name="index"),
     # path("terms/", include(terminology.urls)),
+    path('admin/doc/', include('django.contrib.admindocs.urls')),
     path("admin/", admin.site.urls),
 ]
 
