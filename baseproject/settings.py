@@ -21,7 +21,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'omni.apps.OmniConfig',
+
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
 
     'users.apps.UsersConfig',
+    'omni.apps.OmniConfig',
 
 ]
 
