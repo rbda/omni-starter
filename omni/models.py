@@ -14,7 +14,7 @@ class Game(models.Model):
     team = models.ManyToManyField(Team)
 
     def __str__(self):
-        return ("{} - {}".format(self.team, self.time))
+        return self.team
 
 
 
