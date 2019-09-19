@@ -14,7 +14,7 @@ class Game(models.Model):
     team = models.ManyToManyField(Team)
 
     def __str__(self):
-        return self.team.all()
+        return str(self.team.all())
 
 
 
