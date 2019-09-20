@@ -9,12 +9,40 @@ class Team(models.Model):
         return self.name
 
 
-class Game(models.Model):
+class Event(models.Model):
     time = models.DateTimeField()
-    team = models.ManyToManyField(Team)
+    location = models.CharField(max_length=250)
+    venue = models.CharField(max_length=250)
+    teams = models.ManyToManyField(Team)
 
-    def __str__(self):
-        return str(self.team.all())
+
+class Player(models.Model):
+    username = models.CharField(max_length=250)
+    balance = models.DecimalField(decimal_places=2, max_digits=4)
+
+
+class Outcome(models.Model):
+    '''
+    the result of the event
+    '''
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    winner = models.ForeignKey(Team, on_delete=models.CASCADE, related_name="winner")
+    loser = models.ForeignKey(Team, on_delete=models.CASCADE, related_name="loser")
+
+
+class Bet(models.Model):
+    player = models.ForeignKey(Player, on_delete=models.CASCADE)
+    amount = models.DecimalField(decimal_places=2, max_digits=4)
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    team = models.ForeignKey(Team, on_delete=models.CASCADE)
+
+#
+# class Game(models.Model):
+#     time = models.DateTimeField()
+#     team = models.ManyToManyField(Team)
+#
+#     def __str__(self):
+#         return str(self.team.all())
 
 
 
