@@ -40,7 +40,7 @@ class Outcome(models.Model):
     loser = models.ForeignKey(Team, on_delete=models.CASCADE, related_name="loser")
 
     def __str__(self):
-        return self.event
+        return str(self.event)
 
 
 class Bet(models.Model):
