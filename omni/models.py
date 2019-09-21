@@ -13,7 +13,12 @@ class Event(models.Model):
     time = models.DateTimeField()
     location = models.CharField(max_length=250)
     venue = models.CharField(max_length=250)
-    teams = models.ManyToManyField(Team)
+    teams = models.ManyToManyField(Team, related_name="event_team")
+
+    def __str__(self):
+        # teams_list = self.teams.all()
+        print(self.teams.all())
+        return "{}: {} vs {}".format(self.time.date(), *self.teams.all())
 
 
 class Player(models.Model):
@@ -22,12 +27,20 @@ class Player(models.Model):
 
 
 class Outcome(models.Model):
-    '''
+    """
     the result of the event
-    '''
+    """
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
-    winner = models.ForeignKey(Team, on_delete=models.CASCADE, related_name="winner")
+    # print(dir(event))
+    # print(event)
+    winner = models.ForeignKey(Team,
+                               # choices=Event.teams.all,
+                               on_delete=models.CASCADE,
+                               related_name="winner")
     loser = models.ForeignKey(Team, on_delete=models.CASCADE, related_name="loser")
+
+    def __str__(self):
+        return self.event
 
 
 class Bet(models.Model):
@@ -43,6 +56,3 @@ class Bet(models.Model):
 #
 #     def __str__(self):
 #         return str(self.team.all())
-
-
-
