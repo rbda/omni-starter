@@ -3,6 +3,7 @@ from django.conf import settings
 
 from django.contrib import admin
 
+
 admin.autodiscover()
 
 
@@ -19,6 +20,7 @@ urlpatterns = [
     # path("terms/", include(terminology.urls)),
     path('admin/doc/', include('django.contrib.admindocs.urls')),
     path("admin/", admin.site.urls),
+    path("omni/", include('omni.urls'))
 ]
 
 # django-debug-toolbar

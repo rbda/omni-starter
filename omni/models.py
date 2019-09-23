@@ -1,6 +1,5 @@
 from django.db import models
 
-
 class Team(models.Model):
     name = models.CharField(max_length=200)
     sport = models.CharField(max_length=200)
@@ -30,14 +29,11 @@ class Outcome(models.Model):
     """
     the result of the event
     """
-    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name="event")
     # print(dir(event))
     # print(event)
-    winner = models.ForeignKey(Team,
-                               # choices=Event.teams.all,
-                               on_delete=models.CASCADE,
-                               related_name="winner")
-    loser = models.ForeignKey(Team, on_delete=models.CASCADE, related_name="loser")
+    winner = models.ForeignKey(Team, on_delete=models.CASCADE, related_name="winner", blank=True, null=True)
+    loser = models.ForeignKey(Team, on_delete=models.CASCADE, related_name="loser", blank=True, null=True)
 
     def __str__(self):
         return str(self.event)
