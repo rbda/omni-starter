@@ -1,5 +1,45 @@
 from django.contrib import admin
 from .models import Bet, Event, Outcome, Player, Team
+from django import forms
+
+
+class OutcomeAdminForm(forms.ModelForm):
+
+    def clean_winner(self):
+        if self.cleaned_data["winner"] is None:
+            raise forms.ValidationError("team cannot be none", code="invalid_team_none")
+        # if self.cleaned_data["winner"].id == self.instance.event.id:
+        # print(f"winner.id: {self.cleaned_data['winner'].id}")
+        event = self.data["event"]
+        event_obj = Event.objects.get(id=event)
+        # print(f"event.id: {event}")
+        # print(f"event_obj: {event_obj}")
+        # print(f"event_obj.teams: {event_obj.teams.all()}")
+        if self.cleaned_data["winner"] not in event_obj.teams.all():
+            raise forms.ValidationError("team not in event", code="invalid_event_team")
+        else:
+            print("winner in teams")
+        return self.cleaned_data["winner"]
+
+    def clean_loser(self):
+        if self.cleaned_data["loser"] is None:
+            raise forms.ValidationError("team cannot be none", code="invalid_team_none")
+        event = self.data["event"]
+        event_obj = Event.objects.get(id=event)
+        if self.cleaned_data["loser"] not in event_obj.teams.all():
+            raise forms.ValidationError("team not in event", code="invalid_event_team")
+        else:
+            print("loser in teams")
+        return self.cleaned_data["loser"]
+
+    def clean(self):
+        # print(f"cleaned_data: {self.cleaned_data}")
+        if self.cleaned_data.get("winner") is None:
+            raise forms.ValidationError("team cannot be none", code="invalid_team_none")
+        if self.cleaned_data.get("loser") is None:
+            raise forms.ValidationError("team cannot be none", code="invalid_team_none")
+        if self.cleaned_data["winner"] == self.cleaned_data["loser"]:
+            raise forms.ValidationError("winner and loser cannot be the same team", code="invalid_event_outcome")
 
 
 class BetAdmin(admin.ModelAdmin):
@@ -12,6 +52,7 @@ class EventAdmin(admin.ModelAdmin):
 
 class OutcomeAdmin(admin.ModelAdmin):
     list_display = [field.name for field in Outcome._meta.fields if field.name != ""]
+    form = OutcomeAdminForm
 
 
 class PlayerAdmin(admin.ModelAdmin):

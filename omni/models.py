@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Team(models.Model):
     name = models.CharField(max_length=200)
     sport = models.CharField(max_length=200)
@@ -16,7 +17,7 @@ class Event(models.Model):
 
     def __str__(self):
         # teams_list = self.teams.all()
-        print(self.teams.all())
+        # print(self.teams.all())
         return "{}: {} vs {}".format(self.time.date(), *self.teams.all())
 
 
