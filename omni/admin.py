@@ -52,6 +52,11 @@ class OutcomeAdmin(admin.ModelAdmin):
     list_display = [field.name for field in Outcome._meta.fields if field.name != ""]
     form = OutcomeAdminForm
 
+    def formfield_for_foreignkey(self, db_field, request=None, **kwargs):
+        if db_field.name == "event":
+            kwargs["queryset"] = db_field.related_model.objects.filter(outcome=None)
+        return super(OutcomeAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
+
 
 class PlayerAdmin(admin.ModelAdmin):
     list_display = [field.name for field in Player._meta.fields if field.name != ""]

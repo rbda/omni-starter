@@ -30,7 +30,7 @@ class Outcome(models.Model):
     """
     the result of the event
     """
-    event = models.OneToOneField(Event, on_delete=models.CASCADE, related_name="event", unique=True)
+    event = models.OneToOneField(Event, on_delete=models.CASCADE, related_name="outcome", unique=True)
     winner = models.ForeignKey(Team, on_delete=models.CASCADE, related_name="winner", blank=True, null=True)
     loser = models.ForeignKey(Team, on_delete=models.CASCADE, related_name="loser", blank=True, null=True)
 
