@@ -17,8 +17,6 @@ class OutcomeAdminForm(forms.ModelForm):
         # print(f"event_obj.teams: {event_obj.teams.all()}")
         if self.cleaned_data["winner"] not in event_obj.teams.all():
             raise forms.ValidationError("team not in event", code="invalid_event_team")
-        else:
-            print("winner in teams")
         return self.cleaned_data["winner"]
 
     def clean_loser(self):
@@ -28,18 +26,18 @@ class OutcomeAdminForm(forms.ModelForm):
         event_obj = Event.objects.get(id=event)
         if self.cleaned_data["loser"] not in event_obj.teams.all():
             raise forms.ValidationError("team not in event", code="invalid_event_team")
-        else:
-            print("loser in teams")
         return self.cleaned_data["loser"]
 
     def clean(self):
-        # print(f"cleaned_data: {self.cleaned_data}")
+        super(OutcomeAdminForm, self).clean()
+
         if self.cleaned_data.get("winner") is None:
             raise forms.ValidationError("team cannot be none", code="invalid_team_none")
         if self.cleaned_data.get("loser") is None:
             raise forms.ValidationError("team cannot be none", code="invalid_team_none")
         if self.cleaned_data["winner"] == self.cleaned_data["loser"]:
             raise forms.ValidationError("winner and loser cannot be the same team", code="invalid_event_outcome")
+        return self.cleaned_data
 
 
 class BetAdmin(admin.ModelAdmin):
