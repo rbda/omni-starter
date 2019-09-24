@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Team(models.Model):
     name = models.CharField(max_length=200)
     sport = models.CharField(max_length=200)
@@ -9,14 +10,16 @@ class Team(models.Model):
 
 
 class Event(models.Model):
+    """
+    stores the Event, related to :model:`omni.Team`
+
+    """
     time = models.DateTimeField()
     location = models.CharField(max_length=250)
     venue = models.CharField(max_length=250)
     teams = models.ManyToManyField(Team, related_name="event_team")
 
     def __str__(self):
-        # teams_list = self.teams.all()
-        print(self.teams.all())
         return "{}: {} vs {}".format(self.time.date(), *self.teams.all())
 
 
@@ -27,11 +30,11 @@ class Player(models.Model):
 
 class Outcome(models.Model):
     """
-    the result of the event
+    the result of the event, related to :model:`omni.Event` and :model:`omni.Team`
+
+    must have a winner and loser that are part of the Event, but not the same Team
     """
-    event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name="event")
-    # print(dir(event))
-    # print(event)
+    event = models.OneToOneField(Event, on_delete=models.CASCADE, related_name="event", unique=True)
     winner = models.ForeignKey(Team, on_delete=models.CASCADE, related_name="winner", blank=True, null=True)
     loser = models.ForeignKey(Team, on_delete=models.CASCADE, related_name="loser", blank=True, null=True)
 
@@ -45,10 +48,3 @@ class Bet(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
 
-#
-# class Game(models.Model):
-#     time = models.DateTimeField()
-#     team = models.ManyToManyField(Team)
-#
-#     def __str__(self):
-#         return str(self.team.all())
