@@ -30,9 +30,7 @@ class Outcome(models.Model):
     """
     the result of the event
     """
-    event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name="event")
-    # print(dir(event))
-    # print(event)
+    event = models.OneToOneField(Event, on_delete=models.CASCADE, related_name="event")
     winner = models.ForeignKey(Team, on_delete=models.CASCADE, related_name="winner", blank=True, null=True)
     loser = models.ForeignKey(Team, on_delete=models.CASCADE, related_name="loser", blank=True, null=True)
 
@@ -45,11 +43,3 @@ class Bet(models.Model):
     amount = models.DecimalField(decimal_places=2, max_digits=4)
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
-
-#
-# class Game(models.Model):
-#     time = models.DateTimeField()
-#     team = models.ManyToManyField(Team)
-#
-#     def __str__(self):
-#         return str(self.team.all())
