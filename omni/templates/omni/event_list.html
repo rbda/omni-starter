@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+{#    <h2>List of Events</h2>#}
+        {% for event in object_list %}
+            <div class="jumbotron">
+            <h2>{{ event.teams.all.0 }} vs. {{ event.teams.all.1 }}</h2>
+                <h3>{{ event.time }}</h3>
+                  <h4>Venue: {{ event.venue }}</h4>
+                <h5>Location: {{ event.location }}</h5>
+            {% if event.outcome.winner %}
+                <h5>Winner: {{ event.outcome.winner.name }}</h5>
+            {% endif %}
+
+            {% if event.outcome.loser %}
+                <h5>Loser: {{ event.outcome.loser.name }}</h5>
+            {% endif %}
+            </div>
+        {% endfor %}
+{% endblock %}

@@ -14,9 +14,9 @@
 <nav class="navbar navbar-default navbar-static-top navbar-inverse">
     <div class="container">
         <ul class="nav navbar-nav">
-            <li class="active">
-            </li>
+
             <li>
+                OmniBet
             </li>
             <li class="dropdown">
                 <ul class="dropdown-menu" role="menu">
@@ -26,12 +26,15 @@
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <li class="navbar-right">
+            {% if user %}
+                User: {{ user }}
+            {% endif %}
             </li>
         </ul>
     </div>
 </nav>
 <div>
-    {% block content %}{% endblock %}
+    {% block content %}      {% endblock %}
 </div>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
