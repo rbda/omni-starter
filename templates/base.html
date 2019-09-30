@@ -11,12 +11,14 @@
             crossorigin="anonymous"></script>
 </head>
 <body>
+<div class="fluid-container" style="margin: 10px;">
+{% if user.is_authenticated %}
 <nav class="navbar navbar-default navbar-static-top navbar-inverse">
     <div class="container">
         <ul class="nav navbar-nav">
 
             <li>
-                <a href="{% url "homepage" %}">OmniBet</a>
+                <a href="{% url "event_list" %}">OmniBet</a>
             </li>
             <li class="dropdown">
                 <ul class="dropdown-menu" role="menu">
@@ -26,14 +28,19 @@
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <li class="navbar-right">
-            {% if user %}
-                User: {{ user }}
-            {% endif %}
+            {% if user.is_authenticated %}
+  Hi {{ user.username }}
+  <p><a href="{% url 'logout' %}">logout</a></p>
+{% else %}
+  <p>You are not logged in</p>
+  <a href="{% url 'login' %}">login</a>
+{% endif %}
             </li>
         </ul>
     </div>
 </nav>
-<div>
+{% endif %}
+<div class="container">
     {% block content %}      {% endblock %}
 </div>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -45,5 +52,7 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
+</div>
 </body>
+
 </html>

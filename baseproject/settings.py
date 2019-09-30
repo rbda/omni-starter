@@ -122,3 +122,6 @@ if DEBUG:
     INTERNAL_IPS = ('127.0.0.1',)
 
 AUTH_USER_MODEL = 'users.CustomUser'
+
+LOGIN_REDIRECT_URL = 'event_list'
+LOGOUT_REDIRECT_URL = 'index'
