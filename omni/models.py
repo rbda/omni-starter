@@ -10,7 +10,7 @@ class Team(models.Model):
 
 
 class Event(models.Model):
-    time = models.DateTimeField()
+    time = models.DateTimeField(blank=True, null=True)
     location = models.CharField(max_length=250)
     venue = models.CharField(max_length=250)
     teams = models.ManyToManyField(Team, related_name="event_team")
